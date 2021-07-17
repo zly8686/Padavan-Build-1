@@ -70,7 +70,7 @@ jobs:
 #          - build_variant: "mt7620"
 #            targets: "PSG1208 PSG1218 NEWIFI-MINI MI-MINI MI-3 OYE-001 5K-W20"
           - build_variant: "mt7621"
-            targets: "K2P_nano-5.0"
+            targets: "K2P_nano-5.0 K2P K2P-5.0"
 #          - build_variant: "mt7621-usb"
 #            targets: "XY-C1 JCG-836PRO JCG-AC860M JCG-Y2 DIR-882 A3004NS MSG1500 WR1200JS MI-R3G NEWIFI3 B70"
 #          - build_variant: "mt7628"
