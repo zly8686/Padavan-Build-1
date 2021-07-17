@@ -93,29 +93,6 @@ jobs:
           mkdir -p $toolchain_dir && mkdir -p $images_dir
           curl -LO ${toolchain_url}/${toolchain_pkg}
           tar -xf $toolchain_pkg -C $toolchain_dir
-      - name: Modify configs
-        run: |                         # 修改配置文件
-          cd $config_dir
-          for m in $targets; do if [ -f $m.config ]; then \
-          for n in $ENABLED_CFG; do sed -i "/${n}/c${n}=y" $m.config; done; \
-          for n in $DISABLED_CFG; do sed -i "/${n}/c${n}=n" $m.config; done; \
-          fi; done
-      - name: Copy custom modify
-        if: env.custom_modify == 'true'
-        run: |                         # 拷贝文件并修改
-          for m in $targets; do if [ ! -f public/$m.sh ]; then echo "public/$m.sh 未找到"
-          else
-            if [ -f public/$m.sh ]; then cp -f public/$m.sh $work_dir; echo "$m.sh 拷贝成功"; fi; fi; done; \
-          for m in $targets; do  if [ ! -f public/$m.config ]; then echo "public/$m.config 未找到"
-          else
-            if [ -f public/$m.config ]; then cp -f public/$m.config $config_dir/$m.config; echo "$m.config 已修改"; fi; fi; done; \
-          if [ -f public/public.sh ]; then cp -f public/public.sh $work_dir; fi
-          if [ -d hanwckf/config ]; then cp -f hanwckf/config/* $work_dir; fi
-          if [ -d hanwckf/scripts ]; then cp -f hanwckf/scripts/* $work_dir; fi
-          if [ -d hanwckf/modify ]; then cp -rf hanwckf/modify/* $work_dir; fi
-          cd $work_dir
-          for m in $targets; do if [ -f $m.config ]; then echo "拷贝 $m.config"; cp -f ./$m.config $config_dir/$m.config; fi; done; \
-          for m in $targets; do if [ -f public.sh ]; then echo "执行 public.sh"; sh ./public.sh; fi; if [ -f $m.sh ]; then echo "执行 $m.sh"; sh ./$m.sh; fi; done; \
       - name: Start build firmware
         run: |                         # 执行构建固件
           cd $work_dir
